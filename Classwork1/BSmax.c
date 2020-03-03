@@ -1,0 +1,107 @@
+// C program for implementation of Bubble sort 
+#include <stdio.h> 
+#include <time.h>
+#include <time.h>
+#include <sys/time.h>
+#include <stdlib.h>
+
+void swap(int *xp, int *yp) 
+{ 
+	int temp = *xp; 
+	*xp = *yp; 
+	*yp = temp; 
+} 
+
+// A function to implement bubble sort 
+void bubbleSort(int arr[], int n) 
+{ 
+int i, j; 
+for (i = 0; i < n-1; i++)	 
+
+	// Last i elements are already in place 
+	for (j = 0; j < n-i-1; j++) 
+		if (arr[j] > arr[j+1]) 
+			swap(&arr[j], &arr[j+1]); 
+} 
+void populateArray(int* array, int N){
+	/*seed the random number generator with time*/
+	srand(time(NULL));
+
+	/*iterate through all elements in array and populate them*/
+	for (int i = 0 ; i < N; ++i)
+		array[i] = rand() % 100;
+}
+
+
+/* Function to print an array */
+void printArray(int arr[], int size) 
+{ 
+	int i; 
+	for (i=0; i < size; i++) 
+		printf("%d ", arr[i]); 
+	printf("\n"); 
+} 
+
+// Driver program to test above functions 
+int main() 
+{ 
+	/*used to get the time before and after the algorithm*/
+	struct timeval start, end;
+	/*used for computing the time difference*/
+	unsigned long long int time1, time2, time_taken=0;
+	/*create an array of size 10*/
+	int N = 10000;
+	int array[N];
+    int n=10;
+    // Populate the array in desending order
+    
+
+	// File pointer to write onto a file
+	FILE *tp;
+ 	tp=fopen("timeBS.txt","w");
+	for(int i=0;i<10;++i)
+	{	
+		for(int j=0;j<N;++j){
+        array[j]=N-j;
+        }
+		/*print the original content of the array*/
+		// printf ("Original array: ");
+		// printArray(array, N);
+
+		/*get the time before starting the algorithm*/
+		gettimeofday(&start, NULL);
+
+		/*sort the array using bubble sort algorithm*/
+		bubbleSort(array, N);
+
+		/*get the time after finishing the algorithm*/
+		gettimeofday(&end, NULL);
+
+		/*compute the time taken in microseconds*/
+		time1 = (start.tv_sec * 1000000 + start.tv_usec);
+		time2 = (end.tv_sec * 1000000 + end.tv_usec);
+
+		/*compute the difference in time*/
+		time_taken  =time2 - time1;
+
+		/*print the sorted content of the array*/
+		// printf ("Sorted array: ");
+		// printArray(array, N);
+
+		/*print the time taken to console*/
+		printf ("Time taken: %lluus\n", time_taken);
+		fprintf (tp,"%lluus\n", time_taken);
+	}
+	time_taken= time_taken/10;
+	fprintf (tp,"%lluus\n", time_taken);
+
+	/*return 0 to caller to indicate normal termination of program*/
+	return 0;
+	// }
+	// fclose(fp);
+	 fclose(tp);
+    // //printArray(arr, n); 
+
+	return 0; 
+} 
+
